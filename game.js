@@ -43,18 +43,18 @@ function stardGame() {
     const mapRowCols = mapRows.map(row => row.trim().split(''));
     console.log({'map':map, 'mapRows':mapRows,'mapRowCols':mapRowCols});
 
-    game.clearRect(0,0,canvasSize,canvasSize);
-    mapRowCols.forEach((row,rowI)=>{
-        row.forEach((col,colI)=>{
+    game.clearRect(0,0,canvasSize,canvasSize); /*with this clearRect i keep clear the before position*/
+    mapRowCols.forEach((row,rowI)=>{ /*here i sign up in the row */
+        row.forEach((col,colI)=>{/*here i sign up in the row */
             const emoji = emojis[col]; /*here add the emoji of column and row */
             const posX = elementSize * (colI + 1); /*here calculate the position in x and i add one position for start in the end of canvas*/
-            const posY = elementSize * (rowI + 1);
-            game.fillText(emoji,posX,posY);
+            const posY = elementSize * (rowI + 1); /*here calculate the position in y and i add one position for start in the end of canvas */
+            game.fillText(emoji,posX,posY); /*with the fillText i can draw */
 
-            if(col == 'O'){
+            if(col == 'O'){ /*with this validation i can see if the column has anywhere update of move */
                 if(!playerPosition.x && !playerPosition.y) {
-                    playerPosition.x = posX;
-                    playerPosition.y = posY;
+                    playerPosition.x = posX; /*if do not has anywhere update position ...update the position in x*/
+                    playerPosition.y = posY; /*if do not has anywhere update position ...update the position in x */
                     console.log({playerPosition,posX,posY});
                 }
             }
@@ -83,26 +83,43 @@ function moveByKeys(event) {
 btnUp.addEventListener('click',moveUp);
 function moveUp() {
     console.log('i want move to up')
-    playerPosition.y -= elementSize;
-    stardGame();
+
+    if((playerPosition.y - elementSize) < 0) {
+        console.log('out')
+    } else {
+        playerPosition.y -= elementSize;
+        stardGame();
+    };
 };
 btnRight.addEventListener('click',moveRight);
 function moveRight() {
     console.log('i want move to right');
-    playerPosition.x += elementSize;
-    stardGame()
+    if(playerPosition.x > 500) {
+        console.log('out')
+    } else {
+        playerPosition.x += elementSize;
+        stardGame()
+    }
 };
 btnLeft.addEventListener('click',moveLeft);
 function moveLeft() {
     console.log('i want move to left')
-    playerPosition.x -= elementSize;
-    stardGame()
+    if((playerPosition.x - elementSize) < 53) {
+        console.log('out')
+    } else {
+        playerPosition.x -= elementSize;
+        stardGame()
+    };
 };
 btnDown.addEventListener('click',moveDown);
 function moveDown() {
     console.log('i want to move down')
-    playerPosition.y += elementSize;
-    stardGame()
+    if((playerPosition.y - elementSize) > 450) { /*with this validation i test if the position is major to 450px */
+        console.log('out');
+    } else {
+        playerPosition.y += elementSize;
+        stardGame()
+    };
 };
 
 window.addEventListener('load',setCanvasSize);
