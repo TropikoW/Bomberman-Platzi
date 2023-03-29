@@ -1,32 +1,12 @@
-const canvas = document.querySelector('#canvas');
-const game = canvas.getContext('2d');
+const canvas = document.querySelector('#canvas'); /*here i call to var in my html */
+const game = canvas.getContext('2d'); /*here i say to my canvas the context of my draw */
 
-let canvasSize;
-let elementSize;
+// function startGame() {
+//     // game.fillRect(0,0,300,300) /*is the same function to (clearRect) but this draww */
+//     // game.clearRect(80,0,10,50) /*position x,position y,width,height*/ /*clearRect for clear */
+//     game.font = '25px Verdana'; /*i here declarate the size and style */
+//     game.textAlign = 'end'; /*i here declarate the position about the line */
+//     game.fillText('*',20,40) /*the first argument is the text, and the next argument is the position x and y */
+// };
 
-function setCanvasSize() {
-    if (window.innerWidth < window.innerHeight) {
-        canvasSize = window.innerWidth * 0.8;
-    } else {
-        canvasSize = window.innerHeight * 0.8;
-    };
-    canvas.setAttribute('width',canvasSize);
-    canvas.setAttribute('height',canvasSize);
-
-    elementSize =  canvasSize / 10
-
-    console.log({canvasSize,elementSize})
-    paintCanvas();
-};
-function paintCanvas() {
-    game.font = elementSize + 'px Verdana';
-    game.textAlign = 'end';
-
-    for (let row = 1; row <= 10; row++) {
-        for(let column = 1 ; column <= 10 ; column++){
-            game.fillText('*',elementSize * column,elementSize * row);
-        }
-    }/*this cicle *for* iterates about the row creating the teen rows, and add columns */
-};
-window.addEventListener('resize',setCanvasSize);
-window.addEventListener('load',setCanvasSize);
+window.addEventListener('load',startGame);

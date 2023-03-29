@@ -9,6 +9,10 @@ const playerPosition = {
     x: undefined,
     y: undefined,
 }
+const gitPosition = {
+    x : undefined,
+    y : undefined,
+};
 
 let canvasSize;
 let elementSize;
@@ -27,7 +31,6 @@ function setCanvasSize() {
     canvas.setAttribute('height',canvasSize);
     
     elementSize = canvasSize / 10;
-    window.innerWidth;
 
     console.log({canvasSize,elementSize});
     stardGame();
@@ -35,7 +38,7 @@ function setCanvasSize() {
 
 function stardGame() {
 
-    game.font = (elementSize - 10) + 'px Verdana';
+    game.font = elementSize + 'px Verdana';
     game.textAlign = 'end';
 
     const map = maps[0];
@@ -45,7 +48,7 @@ function stardGame() {
 
     game.clearRect(0,0,canvasSize,canvasSize); /*with this clearRect i keep clear the before position*/
     mapRowCols.forEach((row,rowI)=>{ /*here i sign up in the row */
-        row.forEach((col,colI)=>{/*here i sign up in the row */
+        row.forEach((col,colI)=>{/*here i sign up in the col */
             const emoji = emojis[col]; /*here add the emoji of column and row */
             const posX = elementSize * (colI + 1); /*here calculate the position in x and i add one position for start in the end of canvas*/
             const posY = elementSize * (rowI + 1); /*here calculate the position in y and i add one position for start in the end of canvas */
@@ -84,41 +87,78 @@ btnUp.addEventListener('click',moveUp);
 function moveUp() {
     console.log('i want move to up')
 
-    if((playerPosition.y - elementSize) < 0) {
-        console.log('out')
-    } else {
-        playerPosition.y -= elementSize;
-        stardGame();
-    };
+    if(window.innerWidth > window.innerHeight) {
+        if((playerPosition.y - elementSize) < elementSize - 53) {
+            console.log('out',elementSize)
+        } else {
+            playerPosition.y -= elementSize;
+            stardGame();
+        };
+    } else if(window.innerHeight > window.innerWidth) {
+        if((playerPosition.y - elementSize) < elementSize) {
+            console.log('out',elementSize)
+        } else {
+            playerPosition.y -= elementSize;
+            stardGame();
+        };
+    }
 };
 btnRight.addEventListener('click',moveRight);
 function moveRight() {
     console.log('i want move to right');
-    if(playerPosition.x > 500) {
-        console.log('out')
+
+    if(window.innerHeight > window.innerWidth) {
+        if((playerPosition.x - elementSize) > elementSize + 220) {
+            console.log('out',elementSize)
+        } else {
+            playerPosition.x += elementSize;
+            stardGame()
+        }
     } else {
-        playerPosition.x += elementSize;
-        stardGame()
-    }
+        if((playerPosition.x - elementSize) > elementSize + 400) {
+            console.log('out',elementSize)
+        } else {
+            playerPosition.x += elementSize;
+            stardGame()
+        }
+    };
 };
 btnLeft.addEventListener('click',moveLeft);
 function moveLeft() {
     console.log('i want move to left')
-    if((playerPosition.x - elementSize) < 53) {
-        console.log('out')
+    if(window.innerHeight > window.innerWidth) {
+        if((playerPosition.x - elementSize) < elementSize) {
+            console.log('out',elementSize)
+        } else {
+            playerPosition.x -= elementSize;
+            stardGame()
+        };
     } else {
-        playerPosition.x -= elementSize;
-        stardGame()
+        if((playerPosition.x - elementSize) < elementSize) {
+            console.log('out',elementSize)
+        } else {
+            playerPosition.x -= elementSize;
+            stardGame()
+        };
     };
 };
 btnDown.addEventListener('click',moveDown);
 function moveDown() {
     console.log('i want to move down')
-    if((playerPosition.y - elementSize) > 450) { /*with this validation i test if the position is major to 450px */
-        console.log('out');
-    } else {
-        playerPosition.y += elementSize;
-        stardGame()
+    if(window.innerHeight > window.innerWidth) {
+        if((playerPosition.y - elementSize) > elementSize + 210) {
+            console.log('out',elementSize);
+        } else {
+            playerPosition.y += elementSize;
+            stardGame();
+        };
+    } else if(window.innerWidth > window.innerHeight) {
+        if((playerPosition.y - elementSize) > elementSize + 400) {
+            console.log('out',elementSize)
+        } else {
+            playerPosition.y += elementSize;
+            stardGame();
+        };
     };
 };
 
