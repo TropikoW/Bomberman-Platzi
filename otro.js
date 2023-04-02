@@ -8,6 +8,11 @@ const game = canvas.getContext('2d'); /*here i say to my canvas the context of m
 //     game.textAlign = 'end'; /*i here declarate the position about the line */
 //     game.fillText('*',20,40) /*the first argument is the text, and the next argument is the position x and y */
 // };
+const playerPosition = {
+    x: undefined,
+    y: undefined,
+};
+
 let canvasSize; /*this var used for get the size of canvas*/
 let elementSize; /*this var used for get the size of elements */
 
@@ -81,12 +86,21 @@ function startGame() {
     //     };
     // };
     /*this forEach is same to up, the forEach run the arrays of mapRowCols for each of row and index row, column and index column, and i get the position x and y, before i draw in the canvas all this and done */
+    game.clearRect(0,0,canvasSize,canvasSize);
     mapRowCols.forEach((row,rowI)=>{ /*start the forEach with row*/
         row.forEach((col,colI)=>{  /*before start other forEach, this time with the cols */
             const emoji = emojis[col]; /*in this var i get the emojis fo col */
             const posX = elementSize * (colI +1); /*here i get the position x */
-            const postY = elementSize * (rowI +1); /*here i get the position y */
-            game.fillText(emoji,posX,postY); /*here i draw the emojis and put the position x and y */
+            const posY = elementSize * (rowI +1); /*here i get the position y */
+            game.fillText(emoji,posX,posY); /*here i draw the emojis and put the position x and y */
+
+            if(col == 'O') { /*here i draw the player in the door */
+                if(!playerPosition.x && !playerPosition.y) { /*here validate if the position not has undefined */
+                    playerPosition.x = posX; /*if not has undefined, update the position x */
+                    playerPosition.y = posY; /*if not has undefined, update the position y */
+                };
+            };
+            movePlayer(); /*here i again draw the player */
         });
     });
 };
@@ -104,6 +118,45 @@ function setCanvasSize() {
     elementSize = canvasSize/10; /*here get the size of the var canvasSize and divide by ten */
     console.log({canvasSize,elementSize});
 
+    startGame();
+};
+window.addEventListener('keydown',moveKeys); /*with keydown window listen the event of press click */
+function movePlayer() { /*with this function i draw the position in has new position */
+    game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y);
+};
+function moveKeys(event) { /*this function listen all the event of click */
+    console.log(event); /*in this console.log() i print all event */
+    if(event.code === 'ArrowUp') moveUp();
+    else if(event.code === 'ArrowDown') moveDown();
+    else if(event.code === 'ArrowRight') moveRight();
+    else moveLeft();
+};
+function moveUp() { /*with this funcion move the user to up */
+    console.log({'i want move up':elementSize,playerPosition});
+    if(Math.floor(playerPosition.y) < elementSize) {
+        console.log({'out': playerPosition,elementSize});
+    } else {
+        playerPosition.y -= elementSize;
+        startGame();
+    }
+};
+function moveDown() { /*with this funcion move the user to down */
+    console.log({'i want move down':playerPosition,elementSize});
+    if(Math.floor(playerPosition.y) === elementSize) {
+        console.log({'out': playerPosition,elementSize});
+    } else {
+        playerPosition.y += elementSize;
+        startGame();
+    }
+};
+function moveRight() { /*with this funcion move the user to right */
+    console.log('i want move right');
+    playerPosition.x += elementSize;
+    startGame();
+};
+function moveLeft() { /*with this funcion move the user to left */
+    console.log('i want move left');
+    playerPosition.x -= elementSize;
     startGame();
 };
 
