@@ -9,10 +9,11 @@ const playerPosition = {
     x: undefined,
     y: undefined,
 }
-const gitPosition = {
+const giftPosition = {
     x : undefined,
     y : undefined,
 };
+const enemiesPositions = [];
 
 let canvasSize;
 let elementSize;
@@ -60,6 +61,14 @@ function stardGame() {
                     playerPosition.y = posY; /*if do not has anywhere update position ...update the position in x */
                     console.log({playerPosition,posX,posY});
                 }
+            } else if(col == 'I') {
+                giftPosition.x = posX;
+                giftPosition.y = posY;
+            } else if(col == 'X') {
+                enemiesPositions.push = ({
+                    x : posX,
+                    y : posY,
+                });
             }
         });
     });
@@ -72,6 +81,14 @@ function stardGame() {
 };
 
 function movePlayer() {
+    const giftCollisionX = giftPosition.x.toFixed(3) === playerPosition.x.toFixed(3);
+    const giftCollisionY = giftPosition.y.toFixed(3) === playerPosition.y.toFixed(3);
+    const giftCollision = giftCollisionX === giftCollisionY;
+
+    if(giftCollision) {
+        console.log('Woow, you passed to new level!!!')
+    }
+
     game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y);
 };
 

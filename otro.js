@@ -133,7 +133,7 @@ function moveKeys(event) { /*this function listen all the event of click */
 };
 function moveUp() { /*with this funcion move the user to up */
     console.log({'i want move up':elementSize,playerPosition});
-    if(Math.floor(playerPosition.y) < elementSize) {
+    if(Math.floor(playerPosition.y) <= elementSize) {
         console.log({'out': playerPosition,elementSize});
     } else {
         playerPosition.y -= elementSize;
@@ -141,23 +141,33 @@ function moveUp() { /*with this funcion move the user to up */
     }
 };
 function moveDown() { /*with this funcion move the user to down */
-    console.log({'i want move down':playerPosition,elementSize});
-    if(Math.floor(playerPosition.y) === elementSize) {
-        console.log({'out': playerPosition,elementSize});
+    console.log({'i want move down':playerPosition,elementSize,canvasSize});
+    if(playerPosition.y >= canvasSize) {
+        console.log({'out': playerPosition,elementSize,canvasSize});
     } else {
         playerPosition.y += elementSize;
         startGame();
     }
 };
 function moveRight() { /*with this funcion move the user to right */
-    console.log('i want move right');
-    playerPosition.x += elementSize;
-    startGame();
+    const positionPlayer = Number(playerPosition.x.toFixed(2));
+    console.log({'i want move right':playerPosition,elementSize,canvasSize,positionPlayer});
+    if((positionPlayer + elementSize) > canvasSize) {
+        console.log({'out': playerPosition,elementSize,canvasSize,positionPlayer});
+    } else {
+        playerPosition.x += elementSize;
+        startGame();
+    }
 };
 function moveLeft() { /*with this funcion move the user to left */
-    console.log('i want move left');
-    playerPosition.x -= elementSize;
-    startGame();
+    console.log({'i want move left':playerPosition,elementSize,canvasSize});
+    const positionPlayer = playerPosition.x.toFixed(2);
+    if(playerPosition.x.toFixed(1) <= elementSize) {
+        console.log({'out': playerPosition,elementSize,canvasSize,positionPlayer});
+    } else {
+        playerPosition.x -= elementSize;
+        startGame();
+    }
 };
 
 window.addEventListener('load',setCanvasSize); /*with this line chargue the function setCanvasSize when is all load in the html */
