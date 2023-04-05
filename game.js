@@ -21,6 +21,7 @@ let enemyPositions = [];
 
 let canvasSize;
 let elementSize;
+let level = 0;
 let messageInDoor = false;
 
 function setCanvasSize() {
@@ -46,7 +47,13 @@ function stardGame() {
     game.font = elementSize + 'px Verdana';
     game.textAlign = 'end';
 
-    const map = maps[0];
+    const map = maps[level];
+
+    if(!map) {
+        gameWin();
+        return;
+    }
+
     const mapRows = map.trim().split('\n');  /*.trim delete the space white and .split divides the array in sub arrays more specifid in sub chains */
     const mapRowCols = mapRows.map(row => row.trim().split(''));
 
@@ -91,7 +98,8 @@ function movePlayer() {
     const giftCollision = giftCollisionX && giftCollisionY;
 
     if(giftCollision) {
-        console.log('Woow, you passed to new level!!!')
+        levelWin();
+        stardGame();
     };
 
     const enemyCollision = enemyPositions.find(enemy => {
@@ -102,7 +110,7 @@ function movePlayer() {
     });
 
     if(enemyCollision) {
-        console.log('Stop, you crashed with some obstacle!')
+        levelFail();
     };
 
     const doorCollisionX = doorPosition.x.toFixed(3) === playerPosition.x.toFixed(3);
@@ -119,6 +127,20 @@ function movePlayer() {
     };
 
     game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y);
+};
+
+function levelWin() {
+    console.log('Woww, you passed to next level');
+    level++;
+};
+
+function levelFail() {
+    console.log('Stop, you crashed with some obstacle!');
+    level = 0;
+};
+
+function gameWin() {
+    console.log('Congratulations!, you finish the game!')
 };
 
 
