@@ -13,10 +13,15 @@ const giftPosition = {
     x : undefined,
     y : undefined,
 };
-const enemiesPositions = [];
+const doorPosition = {
+    x : undefined,
+    y : undefined,
+};
+let enemyPositions = [];
 
 let canvasSize;
 let elementSize;
+let messageInDoor = false;
 
 function setCanvasSize() {
 
@@ -33,7 +38,6 @@ function setCanvasSize() {
     
     elementSize = canvasSize / 10;
 
-    console.log({canvasSize,elementSize});
     stardGame();
 };
 
@@ -45,31 +49,32 @@ function stardGame() {
     const map = maps[0];
     const mapRows = map.trim().split('\n');  /*.trim delete the space white and .split divides the array in sub arrays more specifid in sub chains */
     const mapRowCols = mapRows.map(row => row.trim().split(''));
-    console.log({'map':map, 'mapRows':mapRows,'mapRowCols':mapRowCols});
 
+    enemyPositions = [];
     game.clearRect(0,0,canvasSize,canvasSize); /*with this clearRect i keep clear the before position*/
     mapRowCols.forEach((row,rowI)=>{ /*here i sign up in the row */
         row.forEach((col,colI)=>{/*here i sign up in the col */
             const emoji = emojis[col]; /*here add the emoji of column and row */
             const posX = elementSize * (colI + 1); /*here calculate the position in x and i add one position for start in the end of canvas*/
             const posY = elementSize * (rowI + 1); /*here calculate the position in y and i add one position for start in the end of canvas */
-            game.fillText(emoji,posX,posY); /*with the fillText i can draw */
 
             if(col == 'O'){ /*with this validation i can see if the column has anywhere update of move */
                 if(!playerPosition.x && !playerPosition.y) {
                     playerPosition.x = posX; /*if do not has anywhere update position ...update the position in x*/
                     playerPosition.y = posY; /*if do not has anywhere update position ...update the position in x */
-                    console.log({playerPosition,posX,posY});
                 }
+                doorPosition.x = posX;
+                doorPosition.y = posY;
             } else if(col == 'I') {
                 giftPosition.x = posX;
                 giftPosition.y = posY;
-            } else if(col == 'X') {
-                enemiesPositions.push = ({
+            } else if(col == 'X') { /*here i save the position of all obstacle */
+                enemyPositions.push({
                     x : posX,
                     y : posY,
                 });
-            }
+            };
+            game.fillText(emoji,posX,posY); /*with the fillText i can draw */
         });
     });
     movePlayer();
@@ -83,14 +88,39 @@ function stardGame() {
 function movePlayer() {
     const giftCollisionX = giftPosition.x.toFixed(3) === playerPosition.x.toFixed(3);
     const giftCollisionY = giftPosition.y.toFixed(3) === playerPosition.y.toFixed(3);
-    const giftCollision = giftCollisionX === giftCollisionY;
+    const giftCollision = giftCollisionX && giftCollisionY;
 
     if(giftCollision) {
         console.log('Woow, you passed to new level!!!')
-    }
+    };
+
+    const enemyCollision = enemyPositions.find(enemy => {
+        const enemyCollisionX = enemy.x.toFixed(3) == playerPosition.x.toFixed(3);
+        const enemyCollisionY = enemy.y.toFixed(3) == playerPosition.y.toFixed(3);
+
+        return enemyCollisionX && enemyCollisionY;
+    });
+
+    if(enemyCollision) {
+        console.log('Stop, you crashed with some obstacle!')
+    };
+
+    const doorCollisionX = doorPosition.x.toFixed(3) === playerPosition.x.toFixed(3);
+    const doorCollisionY = doorPosition.y.toFixed(3) === playerPosition.y.toFixed(3);
+    const doorCollision = doorCollisionX && doorCollisionY;
+
+    if (doorCollision) {
+        if(messageInDoor == false) {
+            console.log('Good luck');
+            messageInDoor = true;
+        } else if(messageInDoor == true) {
+            console.log('Do you want to go at the previous level back?');
+        };
+    };
 
     game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y);
 };
+
 
 window.addEventListener('keydown',moveByKeys);
 
