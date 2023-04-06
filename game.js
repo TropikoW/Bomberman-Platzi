@@ -4,6 +4,7 @@ const btnUp = document.querySelector('#up');
 const btnRight = document.querySelector('#right');
 const btnLeft = document.querySelector('#left');
 const btnDown = document.querySelector('#down');
+const livesHTML = document.querySelector('#livesHTML');
 
 const playerPosition = {
     x: undefined,
@@ -21,6 +22,7 @@ let enemyPositions = [];
 
 let canvasSize;
 let elementSize;
+let lives = 3;
 let level = 0;
 let messageInDoor = false;
 
@@ -44,6 +46,7 @@ function setCanvasSize() {
 
 function stardGame() {
 
+    showLives();
     game.font = elementSize + 'px Verdana';
     game.textAlign = 'end';
 
@@ -136,13 +139,30 @@ function levelWin() {
 
 function levelFail() {
     console.log('Stop, you crashed with some obstacle!');
-    level = 0;
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
+    lives--;
+
+    if(lives <= 0) {
+        level = 0;
+        lives = 3;
+    }
+    
+    console.log(lives);
+    stardGame();
 };
 
 function gameWin() {
     console.log('Congratulations!, you finish the game!')
 };
 
+function showLives() {
+    const heartArray = Array(lives).fill(emojis['HEART']);
+    heartArray.forEach(heart => {
+        livesHTML.append(heart)
+    })
+    livesHTML.innerHTML = heartArray;
+};
 
 window.addEventListener('keydown',moveByKeys);
 
