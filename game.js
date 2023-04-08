@@ -195,13 +195,15 @@ function moveUp() {
     if(window.innerWidth > window.innerHeight) {
         if((playerPosition.y - elementSize) < elementSize - 53) {
             console.log('out',elementSize)
+            alert('out',elementSize);
         } else {
             playerPosition.y -= elementSize;
             stardGame();
         };
     } else if(window.innerHeight > window.innerWidth) {
         if((playerPosition.y - elementSize) < elementSize) {
-            console.log('out',elementSize)
+            console.log('out',elementSize);
+            alert('out',elementSize);
         } else {
             playerPosition.y -= elementSize;
             stardGame();
@@ -214,14 +216,16 @@ function moveRight() {
 
     if(window.innerHeight > window.innerWidth) {
         if((playerPosition.x - elementSize) > elementSize + 220) {
-            console.log('out',elementSize)
+            console.log('out',elementSize);
+            alert('out',elementSize);
         } else {
             playerPosition.x += elementSize;
             stardGame()
         }
     } else {
         if((playerPosition.x - elementSize) > elementSize + 400) {
-            console.log('out',elementSize)
+            console.log('out',elementSize);
+            alert('out',elementSize);
         } else {
             playerPosition.x += elementSize;
             stardGame()
@@ -233,14 +237,16 @@ function moveLeft() {
     console.log('i want move to left')
     if(window.innerHeight > window.innerWidth) {
         if((playerPosition.x - elementSize) < elementSize) {
-            console.log('out',elementSize)
+            console.log('out',elementSize);
+            alert('out',elementSize);
         } else {
             playerPosition.x -= elementSize;
             stardGame()
         };
     } else {
         if((playerPosition.x - elementSize) < elementSize) {
-            console.log('out',elementSize)
+            console.log('out',elementSize);
+            alert('out',elementSize);
         } else {
             playerPosition.x -= elementSize;
             stardGame()
@@ -253,13 +259,15 @@ function moveDown() {
     if(window.innerHeight > window.innerWidth) {
         if((playerPosition.y - elementSize) > elementSize + 210) {
             console.log('out',elementSize);
+            alert('out',elementSize);
         } else {
             playerPosition.y += elementSize;
             stardGame();
         };
     } else if(window.innerWidth > window.innerHeight) {
         if((playerPosition.y - elementSize) > elementSize + 400) {
-            console.log('out',elementSize)
+            console.log('out',elementSize);
+            alert('out',elementSize);
         } else {
             playerPosition.y += elementSize;
             stardGame();
