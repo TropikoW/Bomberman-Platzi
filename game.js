@@ -38,9 +38,9 @@ function setCanvasSize() {
     /*x game.fillRect(0,0,100,100); left,rigth || y up,down */ /*number look like pixels */
 
     if(window.innerHeight > window.innerWidth) {
-        canvasSize = window.innerWidth * 0.8;
+        canvasSize = window.innerWidth * 0.7;
     } else {
-        canvasSize = window.innerHeight * 0.8;
+        canvasSize = window.innerHeight * 0.7;
     };
 
     canvas.setAttribute('width',canvasSize);
@@ -48,10 +48,13 @@ function setCanvasSize() {
     
     elementSize = canvasSize / 10;
 
-    stardGame();
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
+
+    startGame();
 };
 
-function stardGame() {
+function startGame() {
 
     showLives();
     game.font = elementSize + 'px Verdana';
@@ -115,7 +118,7 @@ function movePlayer() {
 
     if(giftCollision) {
         levelWin();
-        stardGame();
+        startGame();
     };
 
     const enemyCollision = enemyPositions.find(enemy => {
@@ -163,7 +166,7 @@ function levelFail() {
     }
     
     console.log(lives);
-    stardGame();
+    startGame();
 };
 
 function gameWin() {
@@ -210,90 +213,46 @@ function moveByKeys(event) {
      else moveDown();
 };
 btnUp.addEventListener('click',moveUp);
-function moveUp() {
-    console.log('i want move to up')
-
-    if(window.innerWidth > window.innerHeight) {
-        if((playerPosition.y - elementSize) < elementSize - 53) {
-            console.log('out',elementSize)
-            alert('out',elementSize);
-        } else {
-            playerPosition.y -= elementSize;
-            stardGame();
-        };
-    } else if(window.innerHeight > window.innerWidth) {
-        if((playerPosition.y - elementSize) < elementSize) {
-            console.log('out',elementSize);
-            alert('out',elementSize);
-        } else {
-            playerPosition.y -= elementSize;
-            stardGame();
-        };
+function moveUp() { /*with this funcion move the user to up */
+    console.log({'i want move up':elementSize,playerPosition});
+    if(Math.floor(playerPosition.y) <= elementSize) {
+        console.log({'out': playerPosition,elementSize});
+    } else {
+        playerPosition.y -= elementSize;
+        startGame();
     }
 };
 btnRight.addEventListener('click',moveRight);
-function moveRight() {
-    console.log('i want move to right');
-
-    if(window.innerHeight > window.innerWidth) {
-        if((playerPosition.x - elementSize) > elementSize + 220) {
-            console.log('out',elementSize);
-            alert('out',elementSize);
-        } else {
-            playerPosition.x += elementSize;
-            stardGame()
-        }
+function moveRight() { /*with this funcion move the user to right */
+    const positionPlayer = Number(playerPosition.x.toFixed(2));
+    console.log({'i want move right':playerPosition,elementSize,canvasSize,positionPlayer});
+    if((positionPlayer + elementSize) > canvasSize) {
+        console.log({'out': playerPosition,elementSize,canvasSize,positionPlayer});
     } else {
-        if((playerPosition.x - elementSize) > elementSize + 400) {
-            console.log('out',elementSize);
-            alert('out',elementSize);
-        } else {
-            playerPosition.x += elementSize;
-            stardGame()
-        }
-    };
+        playerPosition.x += elementSize;
+        startGame();
+    }
 };
 btnLeft.addEventListener('click',moveLeft);
-function moveLeft() {
-    console.log('i want move to left')
-    if(window.innerHeight > window.innerWidth) {
-        if((playerPosition.x - elementSize) < elementSize) {
-            console.log('out',elementSize);
-            alert('out',elementSize);
-        } else {
-            playerPosition.x -= elementSize;
-            stardGame()
-        };
+function moveLeft() { /*with this funcion move the user to left */
+    console.log({'i want move left':playerPosition,elementSize,canvasSize});
+    const positionPlayer = playerPosition.x.toFixed(2);
+    if(playerPosition.x.toFixed(1) <= elementSize) {
+        console.log({'out': playerPosition,elementSize,canvasSize,positionPlayer});
     } else {
-        if((playerPosition.x - elementSize) < elementSize) {
-            console.log('out',elementSize);
-            alert('out',elementSize);
-        } else {
-            playerPosition.x -= elementSize;
-            stardGame()
-        };
-    };
+        playerPosition.x -= elementSize;
+        startGame();
+    }
 };
 btnDown.addEventListener('click',moveDown);
-function moveDown() {
-    console.log('i want to move down')
-    if(window.innerHeight > window.innerWidth) {
-        if((playerPosition.y - elementSize) > elementSize + 210) {
-            console.log('out',elementSize);
-            alert('out',elementSize);
-        } else {
-            playerPosition.y += elementSize;
-            stardGame();
-        };
-    } else if(window.innerWidth > window.innerHeight) {
-        if((playerPosition.y - elementSize) > elementSize + 400) {
-            console.log('out',elementSize);
-            alert('out',elementSize);
-        } else {
-            playerPosition.y += elementSize;
-            stardGame();
-        };
-    };
+function moveDown() { /*with this funcion move the user to down */
+    console.log({'i want move down':playerPosition,elementSize,canvasSize});
+    if(playerPosition.y >= canvasSize) {
+        console.log({'out': playerPosition,elementSize,canvasSize});
+    } else {
+        playerPosition.y += elementSize;
+        startGame();
+    }
 };
 
 window.addEventListener('load',setCanvasSize);
