@@ -1,5 +1,6 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d');
+const btns = document.querySelector('#btns');
 const btnUp = document.querySelector('#up');
 const btnRight = document.querySelector('#right');
 const btnLeft = document.querySelector('#left');
@@ -8,6 +9,7 @@ const livesHTML = document.querySelector('#livesHTML');
 const time = document.querySelector('#time');
 const record = document.querySelector('#records');
 const pResult = document.querySelector('#result');
+const messages = document.querySelector('#messages');
 
 const playerPosition = {
     x: undefined,
@@ -42,6 +44,8 @@ function setCanvasSize() {
     } else {
         canvasSize = window.innerHeight * 0.7;
     };
+
+    canvasSize = Number(canvasSize.toFixed(0));
 
     canvas.setAttribute('width',canvasSize);
     canvas.setAttribute('height',canvasSize);
@@ -185,6 +189,7 @@ function gameWin() {
         localStorage.setItem('record_time',playerTime);
         pResult.innerHTML = ('Congratulation!, you started with a new record!');
     };
+    showButtonReload();
 };
 
 function showLives() {
@@ -202,6 +207,23 @@ function showTimes() {
 
 function showRecords() {
     record.innerHTML = localStorage.getItem('record_time');
+};
+
+function showButtonReload() {
+    const containerButton = document.createElement('div');
+    const reloadButton = document.createElement('button');
+    const pButton = document.createElement('p');
+    pButton.innerText = 'Reload';
+    btns.appendChild(containerButton);
+    containerButton.appendChild(reloadButton);
+    reloadButton.appendChild(pButton);
+    containerButton.setAttribute('id','buttonReload');
+    const buttonReload = document.querySelector('#buttonReload');
+    buttonReload.addEventListener('click',reloadPage);
+};
+
+function reloadPage() {
+    location.reload();
 };
 
 window.addEventListener('keydown',moveByKeys);
