@@ -173,7 +173,7 @@ function levelFail() {
     startGame();
 };
 
-function gameWin() {
+function gameWin(event) {
     clearInterval(timeInterval);
     const recordTime = localStorage.getItem('record_time');
     const playerTime = Date.now() - timeStart;
@@ -190,6 +190,7 @@ function gameWin() {
         pResult.innerHTML = ('Congratulation!, you started with a new record!');
     };
     showButtonReload();
+    disabledButtons();
 };
 
 function showLives() {
@@ -226,9 +227,17 @@ function reloadPage() {
     location.reload();
 };
 
+function disabledButtons(event) {
+    btnUp.disabled = true;
+    btnRight.disabled = true;
+    btnLeft.disabled = true;
+    btnDown.disabled = true;
+};
+
 window.addEventListener('keydown',moveByKeys);
 
 function moveByKeys(event) {
+    console.log(event);
     if(event.key == 'ArrowUp') moveUp(); /*the event.key listen the events of clicks in the keyboard */
      else if(event.key == 'ArrowRight') moveRight();
      else if(event.key == 'ArrowLeft') moveLeft();
