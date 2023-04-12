@@ -10,6 +10,7 @@ const time = document.querySelector('#time');
 const record = document.querySelector('#records');
 const pResult = document.querySelector('#result');
 const messages = document.querySelector('#messages');
+const email = document.querySelector('#email');
 
 const playerPosition = {
     x: undefined,
@@ -22,6 +23,10 @@ const giftPosition = {
 const doorPosition = {
     x : undefined,
     y : undefined,
+};
+const trophyPosition = {
+    x : undefined,
+    y : undefined
 };
 let enemyPositions = [];
 
@@ -177,6 +182,8 @@ function gameWin(event) {
     clearInterval(timeInterval);
     const recordTime = localStorage.getItem('record_time');
     const playerTime = Date.now() - timeStart;
+    email.innerText = '¿Do you want send me a feedback?, ¡send me to email!, jovannypersonal@gmail.com';
+    
 
     if(recordTime) {
         if(recordTime > playerTime) {
@@ -237,7 +244,6 @@ function disabledButtons(event) {
 window.addEventListener('keydown',moveByKeys);
 
 function moveByKeys(event) {
-    console.log(event);
     if(event.key == 'ArrowUp') moveUp(); /*the event.key listen the events of clicks in the keyboard */
      else if(event.key == 'ArrowRight') moveRight();
      else if(event.key == 'ArrowLeft') moveLeft();
@@ -245,7 +251,6 @@ function moveByKeys(event) {
 };
 btnUp.addEventListener('click',moveUp);
 function moveUp() { /*with this funcion move the user to up */
-    console.log({'i want move up':elementSize,playerPosition});
     if(Math.floor(playerPosition.y) <= elementSize) {
         console.log({'out': playerPosition,elementSize});
     } else {
@@ -256,7 +261,6 @@ function moveUp() { /*with this funcion move the user to up */
 btnRight.addEventListener('click',moveRight);
 function moveRight() { /*with this funcion move the user to right */
     const positionPlayer = Number(playerPosition.x.toFixed(2));
-    console.log({'i want move right':playerPosition,elementSize,canvasSize,positionPlayer});
     if((positionPlayer + elementSize) > canvasSize) {
         console.log({'out': playerPosition,elementSize,canvasSize,positionPlayer});
     } else {
@@ -266,7 +270,6 @@ function moveRight() { /*with this funcion move the user to right */
 };
 btnLeft.addEventListener('click',moveLeft);
 function moveLeft() { /*with this funcion move the user to left */
-    console.log({'i want move left':playerPosition,elementSize,canvasSize});
     const positionPlayer = playerPosition.x.toFixed(2);
     if(playerPosition.x.toFixed(1) <= elementSize) {
         console.log({'out': playerPosition,elementSize,canvasSize,positionPlayer});
@@ -277,7 +280,6 @@ function moveLeft() { /*with this funcion move the user to left */
 };
 btnDown.addEventListener('click',moveDown);
 function moveDown() { /*with this funcion move the user to down */
-    console.log({'i want move down':playerPosition,elementSize,canvasSize});
     if(playerPosition.y >= canvasSize) {
         console.log({'out': playerPosition,elementSize,canvasSize});
     } else {

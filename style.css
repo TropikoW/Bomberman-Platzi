@@ -49,6 +49,7 @@ body {
   
   .messages {
     display: flex;
+    text-align: center;
     flex-wrap: wrap;
     margin: 0 auto;
     width: 80%;
